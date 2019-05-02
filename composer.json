@@ -1,0 +1,29 @@
+{
+    "name": "lisachenko/immutable-object",
+    "description": "Immutable object library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Lisachenko",
+            "email": "lisachenko.it@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Immutable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Immutable\\": "tests/"
+        }
+    }
+}
