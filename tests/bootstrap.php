@@ -9,6 +9,13 @@ declare(strict_types = 1);
  * with this source code in the file LICENSE.
  */
 
+use Immutable\ImmutableHandler;
+use ZEngine\Core;
+
 ini_set('display_errors', 'on');
 
 include __DIR__ . '/../vendor/autoload.php';
+
+// Library initialization by hands
+Core::init();
+ImmutableHandler::install();

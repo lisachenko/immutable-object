@@ -20,15 +20,23 @@ declare(strict_types=1);
 
 namespace Immutable\Stub;
 
-use Immutable\ImmutableTrait;
+use Immutable\ImmutableInterface;
 
-class TestObject
+class TestObject implements ImmutableInterface
 {
-    use ImmutableTrait;
-
     private $privateProperty;
     protected $protectedProperty;
     public $publicProperty;
+
+    public function __construct(array $context)
+    {
+        foreach ($context as $key=>$value) {
+            if (!property_exists(self::class, $key)) {
+                throw new \InvalidArgumentException("Unknown field {$key}");
+            }
+            $this->$key = $value;
+        }
+    }
 
     public function setPrivateTo($newValue)
     {
