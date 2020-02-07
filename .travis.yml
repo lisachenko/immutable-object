@@ -1,0 +1,15 @@
+services:
+  - docker
+matrix:
+  include:
+    - language: php
+      name: "7.4"
+      after_script:
+        - sh .travis.coverage.sh
+      env:
+        - COVERAGE_FLAGS="--coverage-text --coverage-clover=build/clover.xml"
+
+before_script:
+  - docker build --build-arg PHP_VERSION=${TRAVIS_JOB_NAME} -t immutable-object .
+script:
+  - docker run immutable-object /usr/src/immutable-object/vendor/bin/phpunit --verbose ${COVERAGE_FLAGS} --colors
