@@ -19,7 +19,7 @@ annotation which can help us find errors when running static analysis. But durin
 we will not see any errors when trying to change a property in such an object.
 
 However, with the advent of [FFI](https://www.php.net/manual/en/book.ffi.php) and the 
-[Z-Engine](https://travis-ci.org/lisachenko/z-engine) library, it became possible to use PHP to expand the capabilities
+[Z-Engine](https://github.com/lisachenko/z-engine) library, it became possible to use PHP to expand the capabilities
 of the PHP itself.
 
 Pre-requisites and initialization
