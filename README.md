@@ -249,6 +249,5 @@ Please report any unacceptable behavior.
 
 License
 -------
-This library is distributed under [MIT-licens](LICENSE) and it uses `Z-Engine` library distributed under 
-**RPL-1.5** license.
-Please be informed about [Reciprocal Public License 1.5 (RPL-1.5)](https://opensource.org/licenses/RPL-1.5) rules.
+This library is distributed under [MIT-license](LICENSE) and it uses `Z-Engine` library distributed under 
+**RPL-1.5** with additional [premium license](ZENGINE_LICENSE_PREMIUM).

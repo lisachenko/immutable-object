@@ -1,0 +1,20 @@
+This indefinite Z-Engine Open-Source Premium license applies to
+the lisachenko/immutable-object library.
+
+All terms of the Z-Engine license still apply, but with the following modifications:
+
+- You are NOT required to disclose your own source code publicly, which
+  means that this premium license is *perfect* for website/app builders.
+
+- You are NOT required to credit this library anywhere in your own projects.
+  (But if you are re-distributing OUR source code, you must of course still
+  retain all of our copyright notices, and not claim our code as your own.)
+
+- All Derivative Works that use your source code, powered by the Z-Engine library,
+  either publicly or privately are ALLOWED to use Z-Engine as bundled software
+  without RPL license limitations. Derivative Works are NOT ALLOWED to reproduce,
+  modify, sublicense or distribute Z-Engine library themselves.
+
+- You are encouraged (but NOT required) to contribute your library
+  improvements/modifications back to us. We would appreciate it, and may
+  even grant you premium status if the contributions are high-quality!
