@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate and lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer:v2
+
+      - name: Validate composer manifest
+        run: composer validate --strict --no-check-lock
+
+      - name: Lint PHP sources
+        run: |
+          find src tests -name '*.php' -print0 | xargs -0 -n1 -P4 php -l
+
+  tests:
+    name: Tests (PHP ${{ matrix.php-version }}, ${{ matrix.dependencies }} deps)
+    runs-on: ubuntu-latest
+    needs: validate
+
+    strategy:
+      fail-fast: false
+      matrix:
+        dependencies:
+          - lowest
+          - highest
+        php-version:
+          - '8.4'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # The JIT rewrites the executor internals z-engine hooks into, so it
+      # stays off; FFI must be enabled for CLI scripts, not only preloading.
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: ffi
+          ini-values: memory_limit=-1, ffi.enable=1, opcache.jit=off
+          coverage: none
+          tools: composer:v2
+
+      - name: Install lowest dependencies
+        if: ${{ matrix.dependencies == 'lowest' }}
+        run: composer update --prefer-lowest --no-interaction --no-progress
+
+      - name: Install highest dependencies
+        if: ${{ matrix.dependencies == 'highest' }}
+        run: composer update --no-interaction --no-progress
+
+      - name: Run test suite
+        run: vendor/bin/phpunit
