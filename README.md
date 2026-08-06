@@ -1,10 +1,10 @@
 Immutable objects in PHP
 -----------------
-This library provides native immutable objects for PHP>=7.4.2
+This library provides native immutable objects for PHP>=8.4
 
 [![Build Status](https://img.shields.io/travis/com/lisachenko/immutable-object/master)](https://travis-ci.org/lisachenko/immutable-object)
 [![GitHub release](https://img.shields.io/github/release/lisachenko/immutable-object.svg)](https://github.com/lisachenko/immutable-object/releases/latest)
-[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%208.4-8892BF.svg)](https://php.net/)
 [![License](https://img.shields.io/packagist/l/lisachenko/immutable-object.svg)](https://packagist.org/packages/lisachenko/immutable-object)
 
 Rationale
@@ -24,7 +24,7 @@ of the PHP itself.
 
 Pre-requisites and initialization
 --------------
-As this library depends on `FFI`, it requires PHP>=7.4 and `FFI` extension to be enabled.
+As this library depends on `FFI`, it requires PHP>=8.4 and `FFI` extension to be enabled.
 
 To install this library, simply add it via `composer`:
 ```bash
