@@ -27,10 +27,6 @@ Pre-requisites and initialization
 As this library depends on `FFI`, it requires PHP 8.4 or 8.5 and `FFI` extension to be enabled. The matching
 `lisachenko/z-engine` line (`8.4.x-dev` on PHP 8.4, `8.5.x-dev` on PHP 8.5) is resolved by Composer automatically.
 
-> **Note:** PHP 8.5 support is experimental for now — z-engine's 8.5 line does not yet dispatch the
-> write/unset property handlers this library relies on, so immutability is only enforced on PHP 8.4
-> until that lands upstream. The CI matrix runs both minors; the 8.5 leg is non-blocking.
-
 To install this library, simply add it via `composer`:
 ```bash
 composer require lisachenko/immutable-object
