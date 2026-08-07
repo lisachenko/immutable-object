@@ -40,6 +40,13 @@ jobs:
           - highest
         php-version:
           - '8.4'
+          - '8.5'
+
+    # The PHP 8.5 leg is experimental: z-engine's 8.5 line (dev-master) does not
+    # yet intercept property writes/unsets through the installed object handlers,
+    # so the immutability guard tests fail there. The leg stays in the matrix to
+    # track upstream progress without blocking the build; 8.4 remains the gate.
+    continue-on-error: ${{ matrix.php-version == '8.5' }}
 
     steps:
       - name: Checkout

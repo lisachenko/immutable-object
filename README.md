@@ -1,10 +1,10 @@
 Immutable objects in PHP
 -----------------
-This library provides native immutable objects for PHP>=8.4
+This library provides native immutable objects for PHP 8.4 and 8.5
 
-[![Build Status](https://img.shields.io/travis/com/lisachenko/immutable-object/master)](https://travis-ci.org/lisachenko/immutable-object)
+[![CI](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml/badge.svg)](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/release/lisachenko/immutable-object.svg)](https://github.com/lisachenko/immutable-object/releases/latest)
-[![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%208.4-8892BF.svg)](https://php.net/)
+[![PHP Version](https://img.shields.io/badge/php-8.4%20%7C%208.5-8892BF.svg)](https://php.net/)
 [![License](https://img.shields.io/packagist/l/lisachenko/immutable-object.svg)](https://packagist.org/packages/lisachenko/immutable-object)
 
 Rationale
@@ -24,7 +24,12 @@ of the PHP itself.
 
 Pre-requisites and initialization
 --------------
-As this library depends on `FFI`, it requires PHP>=8.4 and `FFI` extension to be enabled.
+As this library depends on `FFI`, it requires PHP 8.4 or 8.5 and `FFI` extension to be enabled. The matching
+`lisachenko/z-engine` line (`8.4.x-dev` on PHP 8.4, `8.5.x-dev` on PHP 8.5) is resolved by Composer automatically.
+
+> **Note:** PHP 8.5 support is experimental for now — z-engine's 8.5 line does not yet dispatch the
+> write/unset property handlers this library relies on, so immutability is only enforced on PHP 8.4
+> until that lands upstream. The CI matrix runs both minors; the 8.5 leg is non-blocking.
 
 To install this library, simply add it via `composer`:
 ```bash
