@@ -25,7 +25,8 @@ of the PHP itself.
 Pre-requisites and initialization
 --------------
 As this library depends on `FFI`, it requires PHP 8.4 or 8.5 and `FFI` extension to be enabled. The matching
-`lisachenko/z-engine` line (`8.4.x-dev` on PHP 8.4, `8.5.x-dev` on PHP 8.5) is resolved by Composer automatically.
+`lisachenko/z-engine` release line (`8.4.x` on PHP 8.4, `8.5.x` on PHP 8.5) is resolved by Composer automatically
+from the `~8.4.2 || ~8.5.0` constraint — both are stable tags, so no `minimum-stability` tweak is needed.
 
 To install this library, simply add it via `composer`:
 ```bash
