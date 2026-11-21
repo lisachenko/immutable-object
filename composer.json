@@ -12,11 +12,12 @@
     "require": {
         "php": "^8.4",
         "ext-ffi": "*",
-        "lisachenko/z-engine": "~8.4.2 || ~8.5.0"
+        "lisachenko/z-engine": "~8.4.2 || ~8.5.0 || ~8.6.0@dev"
     },
     "require-dev": {
-        "phpunit/phpunit": "^12.2"
+        "phpunit/phpunit": "^12.3.6"
     },
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Immutable\\": "src/"
