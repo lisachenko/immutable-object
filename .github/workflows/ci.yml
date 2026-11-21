@@ -48,11 +48,13 @@ jobs:
 
       # The JIT rewrites the executor internals z-engine hooks into, so it
       # stays off; FFI must be enabled for CLI scripts, not only preloading.
+      # OPcache itself has to be loaded: every .phpt pins opcache.enable_cli
+      # explicitly and one of them requires it to be switched on.
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: ffi
+          extensions: ffi, opcache
           ini-values: memory_limit=-1, ffi.enable=1, opcache.jit=off
           coverage: none
           tools: composer:v2

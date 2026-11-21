@@ -1,5 +1,9 @@
 --TEST--
 Updating property of immutable object via Reflection throws an error
+--INI--
+ffi.enable=1
+opcache.jit=off
+opcache.enable_cli=0
 --FILE--
 <?php
 declare(strict_types=1);

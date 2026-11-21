@@ -49,6 +49,26 @@ ImmutableHandler::install();
 Probably, `Z-Engine` will provide an automatic self-registration later, but for now it's ok to perform initialization
 manually.
 
+### Installation is verified, not assumed
+
+`ImmutableHandler::install()` does not just install the engine handlers, it proves on a private throwaway class that a
+property write is really intercepted afterwards. If it is not, `install()` throws a `RuntimeException` naming the cause
+and the workaround instead of returning quietly. An environment where immutability is not enforced now fails loudly at
+start-up rather than letting every write outside a constructor succeed in silence.
+
+Two things can make the handlers unreachable:
+
+* **Classes linked before `install()` ran.** The library hooks classes as they start to implement `ImmutableInterface`,
+  so a class that was already linked — most notably anything pulled in through OPcache preloading (`opcache.preload`) —
+  is never seen. Call `install()` as early as possible, before any immutable class is loaded.
+* **OPcache** (`opcache.enable` / `opcache.enable_cli`). With OPcache active, the engine hands the
+  "interface gets implemented" callback a different `zend_class_entry` than the one it later uses at runtime, so the
+  property handlers used to land on a structure no object ever reads —
+  [lisachenko/z-engine#238](https://github.com/lisachenko/z-engine/issues/238). This library works around it by
+  installing the property handlers from its own `create_object` handler, which does receive the runtime class entry, so
+  immutability is enforced with OPcache enabled as well. Should a future engine defeat that too, the self-check above
+  turns it into a start-up error; disabling OPcache for the process remains the fallback.
+
 Applying immutability
 --------
 In order to make your object immutable, you just need to implement the `ImmutableInterface` interface marker in your
