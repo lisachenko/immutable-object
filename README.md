@@ -1,26 +1,79 @@
 Immutable objects in PHP
 -----------------
-This library provides native immutable objects for PHP 8.4, 8.5 and 8.6
+This library makes objects immutable from pure PHP, by rewriting the engine's own object handlers at runtime. It runs
+on PHP 8.4, 8.5 and 8.6.
 
 [![CI](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml/badge.svg)](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/release/lisachenko/immutable-object.svg)](https://github.com/lisachenko/immutable-object/releases/latest)
 [![PHP Version](https://img.shields.io/badge/php-8.4%20%7C%208.5%20%7C%208.6-8892BF.svg)](https://php.net/)
 [![License](https://img.shields.io/packagist/l/lisachenko/immutable-object.svg)](https://packagist.org/packages/lisachenko/immutable-object)
+[![Status](https://img.shields.io/badge/status-showcase-blueviolet.svg)](#status-php-has-this-built-in-now)
 
-Rationale
+Status: PHP has this built in now
+------------
+**You don't need this library to get immutable objects any more: PHP itself does it.** When this project started, PHP
+had no way to stop a property from changing after construction. The language has since caught up:
+
+| PHP | Feature |
+|-----|---------|
+| 8.1 | [`readonly` properties](https://wiki.php.net/rfc/readonly_properties_v2): a typed property can be initialized once, from inside the class, and never written again |
+| 8.2 | [`readonly` classes](https://wiki.php.net/rfc/readonly_classes): every declared property of the class is `readonly` |
+| 8.3 | [Readonly amendments](https://wiki.php.net/rfc/readonly_amendments): `readonly` properties can be re-initialized inside `__clone()`, which makes deep cloning possible |
+| 8.4 | [Asymmetric visibility](https://wiki.php.net/rfc/asymmetric-visibility-v2): `public private(set)` properties that anyone can read but only the class can write |
+| 8.5 | [Clone with](https://wiki.php.net/rfc/clone_with_v2): `clone($object, ['property' => $value])` turns a "wither" on a readonly class into a one-liner |
+
+The example below needs no extension, no FFI and no library:
+
+```php
+final readonly class Money
+{
+    public function __construct(
+        public int $amount,
+        public string $currency,
+    ) {}
+
+    public function withAmount(int $amount): static
+    {
+        return clone($this, ['amount' => $amount]); // PHP 8.5+
+    }
+}
+
+$price = new Money(100, 'EUR');
+$price->amount = 200;              // Error: Cannot modify readonly property Money::$amount
+$sale = $price->withAmount(80);    // a new Money(80, 'EUR'); $price is untouched
+```
+
+For new code, use `readonly` (and `private(set)` where you need it). It's enforced by the engine, understood by every
+IDE and static analyser, and costs nothing at runtime.
+
+### So why keep this repository?
+
+Because it is still a compact, working, tested example of something most PHP developers never get to see: **changing
+how the Zend Engine treats a class, from PHP, while the program runs.** In about 250 lines of PHP it:
+
+* hooks `interface_gets_implemented` so that merely writing `implements ImmutableInterface` changes a class;
+* replaces the class's `create_object` handler, so every new instance gets its own object handlers table;
+* overrides `write_property`, `unset_property` and `get_property_ptr_ptr` to refuse writes, unsets and references
+  outside the constructor;
+* proves at start-up that the interception really works, and survives OPcache handing the engine a different class
+  entry ([lisachenko/z-engine#238](https://github.com/lisachenko/z-engine/issues/238)).
+
+These are the same hook points where the engine's standard object handlers enforce `readonly` today. If you're curious how PHP works underneath, read
+[Low-level details (for geeks)](#low-level-details-for-geeks) below, then the source. It stays maintained and tested on
+every supported PHP minor, as a showcase for [Z-Engine](https://github.com/lisachenko/z-engine).
+
+Rationale (historical)
 ------------
 How many times have you thought it would be nice to have immutable objects in PHP? How many errors could be avoided if
-the objects could warn about attempts to change them outside the constructor? Unfortunately, 
-[Immutability RFC](https://wiki.php.net/rfc/immutability) has never been implemented.
+the objects could warn about attempts to change them outside the constructor? At the time this library was written,
+the [Immutability RFC](https://wiki.php.net/rfc/immutability) had never been implemented, so PHP had no answer at all.
 
-What to do? 
-Of course, there is [psalm-immutable](https://psalm.dev/docs/annotating_code/supported_annotations/#psalm-immutable) 
-annotation which can help us find errors when running static analysis. But during the development of the code itself, 
-we will not see any errors when trying to change a property in such an object.
+[psalm-immutable](https://psalm.dev/docs/annotating_code/supported_annotations/#psalm-immutable) could catch mistakes
+during static analysis, but nothing stopped a property from changing while the code ran.
 
-However, with the advent of [FFI](https://www.php.net/manual/en/book.ffi.php) and the 
+However, with the advent of [FFI](https://www.php.net/manual/en/book.ffi.php) and the
 [Z-Engine](https://github.com/lisachenko/z-engine) library, it became possible to use PHP to expand the capabilities
-of the PHP itself.
+of PHP itself, and to show what native immutability could look like years before the language shipped it.
 
 Pre-requisites and initialization
 --------------
