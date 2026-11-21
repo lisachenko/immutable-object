@@ -1,10 +1,10 @@
 Immutable objects in PHP
 -----------------
-This library provides native immutable objects for PHP 8.4 and 8.5
+This library provides native immutable objects for PHP 8.4, 8.5 and 8.6
 
 [![CI](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml/badge.svg)](https://github.com/lisachenko/immutable-object/actions/workflows/ci.yml)
 [![GitHub release](https://img.shields.io/github/release/lisachenko/immutable-object.svg)](https://github.com/lisachenko/immutable-object/releases/latest)
-[![PHP Version](https://img.shields.io/badge/php-8.4%20%7C%208.5-8892BF.svg)](https://php.net/)
+[![PHP Version](https://img.shields.io/badge/php-8.4%20%7C%208.5%20%7C%208.6-8892BF.svg)](https://php.net/)
 [![License](https://img.shields.io/packagist/l/lisachenko/immutable-object.svg)](https://packagist.org/packages/lisachenko/immutable-object)
 
 Rationale
@@ -24,9 +24,10 @@ of the PHP itself.
 
 Pre-requisites and initialization
 --------------
-As this library depends on `FFI`, it requires PHP 8.4 or 8.5 and `FFI` extension to be enabled. The matching
-`lisachenko/z-engine` release line (`8.4.x` on PHP 8.4, `8.5.x` on PHP 8.5) is resolved by Composer automatically
-from the `~8.4.2 || ~8.5.0` constraint — both are stable tags, so no `minimum-stability` tweak is needed.
+As this library depends on `FFI`, it requires PHP 8.4, 8.5 or 8.6 and `FFI` extension to be enabled. The matching
+`lisachenko/z-engine` release line (`8.4.x` on PHP 8.4, `8.5.x` on PHP 8.5, `8.6.x` on PHP 8.6) is resolved by
+Composer automatically from the `~8.4.2 || ~8.5.0 || ~8.6.0` constraint — all three are stable tags, so no
+`minimum-stability` tweak is needed.
 
 To install this library, simply add it via `composer`:
 ```bash
