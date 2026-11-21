@@ -1,6 +1,6 @@
 {
     "name": "lisachenko/immutable-object",
-    "description": "Immutable object library",
+    "description": "Immutable objects from pure PHP by rewriting engine object handlers through z-engine; a showcase now that PHP has native readonly classes",
     "type": "library",
     "license": "MIT",
     "authors": [
